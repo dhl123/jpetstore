@@ -4,6 +4,7 @@ import com.software.jpetstore.domain.Category;
 import com.software.jpetstore.domain.Item;
 import com.software.jpetstore.domain.Product;
 import com.software.jpetstore.persistence.CategoryMapper;
+import com.software.jpetstore.persistence.ItemMapper;
 import com.software.jpetstore.persistence.ProductMapper;
 import com.software.jpetstore.service.CatalogService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,8 @@ public class CatalogServiceImpl implements CatalogService {
     private CategoryMapper categoryMapper;
     @Autowired
     private ProductMapper productMapper;
+    @Autowired
+    private ItemMapper itemMapper;
     public List<Category> getCategoryList() {
         return categoryMapper.getCategoryList();
     }
@@ -38,10 +41,10 @@ public class CatalogServiceImpl implements CatalogService {
     }
 
     public List<Item> getItemListByProduct(String productId){
-        return null;
+        return itemMapper.getItemListByProduct(productId);
     }
     public Item getItem(String itemId){
-        return null;
+        return itemMapper.getItem(itemId);
     }
 
 

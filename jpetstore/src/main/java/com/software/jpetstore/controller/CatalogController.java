@@ -1,7 +1,9 @@
 package com.software.jpetstore.controller;
 
 import com.software.jpetstore.domain.Category;
+import com.software.jpetstore.domain.Item;
 import com.software.jpetstore.domain.Product;
+import com.software.jpetstore.persistence.ProductMapper;
 import com.software.jpetstore.service.CatalogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,5 +28,23 @@ public class CatalogController {
         model.addAttribute(category);
         model.addAttribute(productList);
         return "/catalog/category";
+    }
+    @GetMapping("/catalog/product")
+    public String viewProduct(@RequestParam("productId") String productid, Model model){
+        //System.out.println(productid);
+        Product product=catalogService.getProduct(productid);
+        List<Item> itemList =catalogService.getItemListByProduct(productid);
+        model.addAttribute(product);
+        model.addAttribute(itemList);
+        return "/catalog/product";
+    }
+    @GetMapping("/catalog/item")
+    public String viewItem(@RequestParam("itemId") String itemid,@RequestParam("productId") String productid, Model model){
+        Item item=catalogService.getItem(itemid);
+        Product product=catalogService.getProduct(productid);
+
+        model.addAttribute(item);
+        model.addAttribute(product);
+        return "/catalog/item";
     }
 }

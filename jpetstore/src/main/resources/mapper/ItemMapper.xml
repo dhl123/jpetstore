@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.software.jpetstore.persistence.ItemMapper">
 
   <cache />
 
-  <select id="getItemListByProduct" parameterType="string" resultType="com.software.jpetstore.domain.Item">
+  <select id="getItemListByProduct" parameterType="java.lang.String" resultType="com.software.jpetstore.domain.Item">
     SELECT
       I.ITEMID,
       LISTPRICE,
@@ -27,7 +27,7 @@
     AND I.PRODUCTID = #{value}
   </select>
 
-  <select id="getItem" parameterType="string" resultType="com.software.jpetstore.domain.Item">
+  <select id="getItem" parameterType="java.lang.String" resultType="com.software.jpetstore.domain.Item">
     select
       I.ITEMID,
       LISTPRICE,
@@ -50,7 +50,7 @@
       and I.ITEMID = #{value}
   </select>
 
-  <select id="getInventoryQuantity" parameterType="string" resultType="int">
+  <select id="getInventoryQuantity" parameterType="java.lang.String" resultType="int">
     SELECT QTY AS value
     FROM INVENTORY
     WHERE ITEMID = #{itemId}
