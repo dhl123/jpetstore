@@ -9,7 +9,7 @@
 
     <div id="Menu">
         <div id="MenuContent">
-            <a href="viewCart"><img align="middle" name="img_cart"
+            <a href="/cart/viewCart"><img align="middle" name="img_cart"
                                     src="/images/cart.gif" /></a> <img align="middle"
                                                                          src="/images/separator.gif" /> <a
                 href="/account/SignonForm.html">Sign In</a> <a href="#">Sign
@@ -21,7 +21,7 @@
 
     <div id="Search">
         <div id="SearchContent">
-            <form action="search" method="post">
+            <form th:action="@{/catalog/SearchProducts}" th:object="${user}" th:method="post">
                 <input type="text" name="keyword" size="14" /> <input type="submit"
                                                                       name="searchProducts" value="Search" />
             </form>

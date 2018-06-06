@@ -50,13 +50,13 @@
       and I.ITEMID = #{value}
   </select>
 
-  <select id="getInventoryQuantity" parameterType="java.lang.String" resultType="int">
+  <select id="getInventoryQuantity" parameterType="java.lang.String" resultType="java.lang.Integer">
     SELECT QTY AS value
     FROM INVENTORY
     WHERE ITEMID = #{itemId}
   </select>
 
-  <update id="updateInventoryQuantity" parameterType="map">
+  <update id="updateInventoryQuantity" parameterType="java.util.Map">
     UPDATE INVENTORY SET
       QTY = QTY - #{increment}
     WHERE ITEMID = #{itemId}

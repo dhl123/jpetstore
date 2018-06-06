@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common/template_head::head('MyPetstore Main')">
+</head>
+<body>
+<header th:replace="common/template_menu::header"></header>
+
+<div id="BackLink"><a href="/catalog/main">Return to Main Menu</a></div>
+
+<div id="Catalog">
+
+    <table>
+        <tr>
+            <th>&nbsp;</th>
+            <th>Product ID</th>
+            <th>Name</th>
+        </tr>
+            <tr th:each="product : ${productList}">
+                <td>
+                    <a th:href="@{/catalog/product(productId=${product.productId})}" th:text="${product.description}"></a>
+                </td>
+                <td><b>
+                    <a th:href="@{/catalog/product(produtId=${product.productId})}" th:text="${product.productId}"><font color="BLACK">  </font></a>
+                </td>
+                <td th:text="${product.name}"></td>
+            </tr>
+
+        <tr>
+            <td></td>
+        </tr>
+
+    </table>
+
+</div>
+
+<footer th:replace="common/template_menu::footer"></footer>
+
+
+
+
+
+</body>
+</html>
