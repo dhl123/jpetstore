@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="common/template_head::head('MyPetstore Catagory')">
+
+</head>
+<body>
+<header th:replace="common/template_menu::header"></header>
+
+
+<%@ include file="../common/IncludeTop.jsp"%>
+
+<div id="Catalog"><form >
+
+    <p>Please enter your username and password.</p>
+    <p>Username:<text name="username" value="j2ee" /> <br />
+        Password:<password name="password" value="j2ee" /></p>
+    <submit name="signon" value="Login" />
+
+</form> Need a user name and password? <link
+        beanclass="org.mybatis.jpetstore.web.actions.AccountActionBean"
+        event="newAccountForm">Register Now!</link></div>
+
+<%@ include file="../common/IncludeBottom.jsp"%>
+
+
+
+
+<footer th:replace="common/template_menu::footer"></footer>
+</body>
+</html>
