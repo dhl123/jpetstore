@@ -16,8 +16,12 @@ import java.util.List;
 @Controller
 public class CartController {
     private Cart cart=new Cart();
+    private final CatalogService catalogService;
+
     @Autowired
-    private CatalogService catalogService;
+    public CartController(CatalogService catalogService) {
+        this.catalogService = catalogService;
+    }
 
     @GetMapping("cart/addItemToCart")
     public String addItem(@RequestParam("workingItemId") String itemid,Model model){

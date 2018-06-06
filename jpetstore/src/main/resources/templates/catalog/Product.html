@@ -8,9 +8,9 @@
 
 </header>
 
-
 <div id="BackLink">
-    <a th:href="@{/catalog/category(categoryId=${product.categoryId},productId=${product.productId})}" th:text="'Return to'+ ${product.categoryId}"></a>
+    <!--/*@thymesVar id="product" type="com.software.jpetstore.domain.Product"*/-->
+    <a th:href="@{/catalog/category(categoryId=${product.categoryId},productId=${product.productId})}" th:text="'Return to '+ ${product.categoryId}"></a>
 </div>
 
 <div id="Catalog">
@@ -23,25 +23,25 @@
             <th>Product ID</th>
             <th>Description</th>
             <th>List Price</th>
-            <th>&nbsp;</th>
         </tr>
+            <!--/*@thymesVar id="itemList" type="com.software.jpetstore.domain.Item"*/-->
             <tr th:each="item : ${itemList}">
                 <td>
                     <a th:href="@{/catalog/item(itemId=${item.itemId},productId=${item.product.productId})}" th:text="${item.itemId}"></a>
                 </td>
-                <td th:text="${item.product.productId}"></td>
+                <!--/*@thymesVar id="product" type="com.software.jpetstore.domain.Product"*/-->
+                <td th:text="${item.product.productId}">
+
+                </td>
                 <td th:text="${item.attribute1}+${item.attribute2}+${item.attribute3}+${item.attribute4}+${item.attribute5}+${product.name}">
                 </td>
                 <!--<td><fmt:formatNumber value="${item.listPrice}"
                                       pattern="$#,##0.00" /></td>-->
                 <td>
+                    <!--/*@thymesVar id="product" type="com.software.jpetstore.domain.Product"*/-->
                     <a th:href="@{/cart/addItemToCart(workingItemId=${item.itemId},productId=${item.product.productId})}">Add to Cart</a>
                 </td>
             </tr>
-        <tr>
-            <td>
-            </td>
-        </tr>
     </table>
 
 </div>

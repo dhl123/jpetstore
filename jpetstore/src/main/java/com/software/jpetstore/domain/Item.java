@@ -4,9 +4,6 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 public class Item implements Serializable {
-
-    private static final long serialVersionUID = -2159121673445254631L;
-
     private String itemId;
     private String productId;
     private BigDecimal listPrice;
@@ -15,34 +12,13 @@ public class Item implements Serializable {
     private String status;
     private String attribute1;
     private String attribute2;
-    private String attribute3;
-    private String attribute4;
-    private String attribute5;
-    private Product product;
-    private int quantity;
 
     public String getItemId() {
         return itemId;
     }
 
     public void setItemId(String itemId) {
-        this.itemId = itemId.trim();
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
+        this.itemId = itemId;
     }
 
     public String getProductId() {
@@ -51,14 +27,6 @@ public class Item implements Serializable {
 
     public void setProductId(String productId) {
         this.productId = productId;
-    }
-
-    public int getSupplierId() {
-        return supplierId;
-    }
-
-    public void setSupplierId(int supplierId) {
-        this.supplierId = supplierId;
     }
 
     public BigDecimal getListPrice() {
@@ -75,6 +43,14 @@ public class Item implements Serializable {
 
     public void setUnitCost(BigDecimal unitCost) {
         this.unitCost = unitCost;
+    }
+
+    public int getSupplierId() {
+        return supplierId;
+    }
+
+    public void setSupplierId(int supplierId) {
+        this.supplierId = supplierId;
     }
 
     public String getStatus() {
@@ -125,8 +101,26 @@ public class Item implements Serializable {
         this.attribute5 = attribute5;
     }
 
-    public String toString() {
-        return "(" + getItemId() + "-" + getProductId() + ")";
+    public Product getProduct() {
+        return product;
     }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    private String attribute3;
+    private String attribute4;
+    private String attribute5;
+    private Product product;
+    private int quantity;
 
 }

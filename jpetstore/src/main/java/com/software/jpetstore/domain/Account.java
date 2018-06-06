@@ -1,7 +1,8 @@
 package com.software.jpetstore.domain;
 
+import java.io.Serializable;
 
-public class Account {
+public class Account implements Serializable {
     private String username;
     private String email;
     private String firstName;

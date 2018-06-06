@@ -17,12 +17,18 @@ import java.util.List;
 
 @Controller
 public class CatalogController {
+    private final CatalogService catalogService;
+
     @Autowired
-    private CatalogService catalogService;
-    @GetMapping("/catalog/main")
+    public CatalogController(CatalogService catalogService) {
+        this.catalogService = catalogService;
+    }
+
+    @GetMapping("/catalog")
     public String view(){
         return "catalog/main";
     }
+
     @GetMapping("/catalog/category")
     public String viewCategory(@RequestParam("categoryId") String categoryid, Model model){
         Category category=catalogService.getCategory(categoryid);
@@ -54,6 +60,6 @@ public class CatalogController {
     public String search(@RequestParam("keyword") String keyword,Model model){
         List<Product> productList=catalogService.searchProductList(keyword);
         model.addAttribute(productList);
-        return "/catalog/SearchProducts";
+        return "/catalog/searchProducts";
     }
 }

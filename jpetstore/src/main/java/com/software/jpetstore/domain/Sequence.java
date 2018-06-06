@@ -3,34 +3,31 @@ package com.software.jpetstore.domain;
 import java.io.Serializable;
 
 public class Sequence implements Serializable {
+    private String name;
+    private int nextId;
 
-  private static final long serialVersionUID = 8278780133180137281L;
+    public Sequence() {
+    }
 
-  private String name;
-  private int nextId;
+    public Sequence(String name, int nextId) {
+        this.name = name;
+        this.nextId = nextId;
+    }
 
-  public Sequence() {
-  }
+    public String getName() {
+        return name;
+    }
 
-  public Sequence(String name, int nextId) {
-    this.name = name;
-    this.nextId = nextId;
-  }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-  public String getName() {
-    return name;
-  }
+    public int getNextId() {
+        return nextId;
+    }
 
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public int getNextId() {
-    return nextId;
-  }
-
-  public void setNextId(int nextId) {
-    this.nextId = nextId;
-  }
+    public void setNextId(int nextId) {
+        this.nextId = nextId;
+    }
 
 }

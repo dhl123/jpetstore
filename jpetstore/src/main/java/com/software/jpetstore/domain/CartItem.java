@@ -1,8 +1,9 @@
 package com.software.jpetstore.domain;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class CartItem {
+public class CartItem implements Serializable {
     private Item item;
     private int quantity;
     private boolean inStock;

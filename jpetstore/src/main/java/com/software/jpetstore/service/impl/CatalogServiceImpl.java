@@ -14,12 +14,17 @@ import java.sql.ResultSet;
 import java.util.List;
 @Service
 public class CatalogServiceImpl implements CatalogService {
+    private final CategoryMapper categoryMapper;
+    private final ProductMapper productMapper;
+    private final ItemMapper itemMapper;
+
     @Autowired
-    private CategoryMapper categoryMapper;
-    @Autowired
-    private ProductMapper productMapper;
-    @Autowired
-    private ItemMapper itemMapper;
+    public CatalogServiceImpl(CategoryMapper categoryMapper, ProductMapper productMapper, ItemMapper itemMapper) {
+        this.categoryMapper = categoryMapper;
+        this.productMapper = productMapper;
+        this.itemMapper = itemMapper;
+    }
+
     public List<Category> getCategoryList() {
         return categoryMapper.getCategoryList();
     }

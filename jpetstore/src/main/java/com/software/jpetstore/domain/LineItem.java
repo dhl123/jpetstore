@@ -1,8 +1,9 @@
 package com.software.jpetstore.domain;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class LineItem {
+public class LineItem implements Serializable {
     public LineItem(int lineNumber, CartItem cartItem) {
         this.lineNumber = lineNumber;
         this.quantity = cartItem.getQuantity();

@@ -4,15 +4,12 @@ import java.util.List;
 
 import com.software.jpetstore.domain.Order;
 import com.software.jpetstore.domain.Order;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface OrderMapper {
-
-  List<Order> getOrdersByUsername(String username);
-
-  Order getOrder(int orderId);
-  
-  void insertOrder(Order order);
-  
-  void insertOrderStatus(Order order);
-
+    List<Order> getOrdersByUsername(String username);
+    Order getOrder(int orderId);
+    void insertOrder(Order order);
+    void insertOrderStatus(Order order);
 }

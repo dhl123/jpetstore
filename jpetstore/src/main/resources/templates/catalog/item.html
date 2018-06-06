@@ -8,7 +8,7 @@
 <header th:replace="common/template_menu::header"></header>
 
 <div id="BackLink">
-    <a th:href="@{/catalog/product(productId=${product.productId}}" th:text="'Return to'+${product.productId}">
+    <a th:href="@{/catalog/product(productId=${product.productId}}" th:text="'Return to '+${product.productId}">
 
     </a>
 </div>
@@ -17,16 +17,17 @@
 
     <table>
         <tr>
-            <td th:text="${product.description}"></td>
+            <td th:utext="${product.description}"></td>
         </tr>
         <tr>
             <td><b th:text="${item.itemId}">  </b></td>
         </tr>
         <tr>
-            <td><b><font size="4" th:text="${item.attribute1}+${item.attribute2}+${item.attribute3}+${item.attribute4}+${item.attribute5}+${product.name}">  </font></b></td>
+            <td><b><!--/*@thymesVar id="item" type="com.software.jpetstore.domain.Item"*/-->
+            <font size="4" th:text="${item.attribute1}+${item.attribute2}+${item.attribute3}+${item.attribute4}+${item.attribute5}+${product.name}">  </font></b></td>
         </tr>
         <tr>
-            <td>${product.name}</td>
+            <td th:text="${product.name}"></td>
         </tr>
         <tr>
             <td th:if="${item.quantity} le 0">
@@ -48,11 +49,6 @@
 </div>
 
 <footer th:replace="common/template_menu::footer"></footer>
-
-
-
-
-
 
 </body>
 </html>

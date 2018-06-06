@@ -1,9 +1,10 @@
 package com.software.jpetstore.domain;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.*;
 
-public class Cart {
+public class Cart implements Serializable {
     private final Map<String, CartItem> itemMap = Collections.synchronizedMap(new HashMap<String, CartItem>());
     private final List<CartItem> itemList = new ArrayList<>();
 
