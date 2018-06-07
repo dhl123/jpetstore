@@ -1,8 +1,10 @@
 package com.software.jpetstore.controller;
 
+import com.software.jpetstore.domain.Account;
 import com.software.jpetstore.domain.Cart;
 import com.software.jpetstore.domain.CartItem;
 import com.software.jpetstore.domain.Item;
+import com.software.jpetstore.service.AccountService;
 import com.software.jpetstore.service.CatalogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,7 +20,8 @@ public class CartController {
     private Cart cart=new Cart();
     @Autowired
     private CatalogService catalogService;
-
+    @Autowired
+    private AccountService accountService;
     @GetMapping("cart/addItemToCart")
     public String addItem(@RequestParam("workingItemId") String itemid,Model model){
         boolean isInStock = catalogService.isItemInStock(itemid);
@@ -34,5 +37,9 @@ public class CartController {
         Iterator<CartItem> cartItems=cart.getCartItems();
         model.addAttribute(cartItems);
         return "cart/cart";
+    }
+    @GetMapping("cart/cart")
+    public String view(){
+        return "/cart/cart";
     }
 }

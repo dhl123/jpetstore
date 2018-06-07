@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -20,8 +21,10 @@ public class CatalogController {
     @Autowired
     private CatalogService catalogService;
     @GetMapping("/catalog/main")
-    public String view(){
-        return "catalog/main";
+    public String view(HttpSession session,Model model){
+        boolean authenticated=false;
+        session.setAttribute("authenticated",authenticated);
+        return "/catalog/main";
     }
     @GetMapping("/catalog/category")
     public String viewCategory(@RequestParam("categoryId") String categoryid, Model model){
