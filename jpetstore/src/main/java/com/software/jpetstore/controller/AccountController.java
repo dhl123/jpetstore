@@ -4,8 +4,6 @@ import com.software.jpetstore.domain.Account;
 import com.software.jpetstore.domain.Product;
 import com.software.jpetstore.service.AccountService;
 import com.software.jpetstore.service.CatalogService;
-import jdk.nashorn.internal.ir.RuntimeNode;
-import org.hibernate.validator.constraints.CodePointLength;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
-import javax.websocket.Session;
 import java.util.List;
 
 @Controller

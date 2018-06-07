@@ -1,9 +1,9 @@
 package com.software.jpetstore.controller;
 
+import com.software.jpetstore.domain.Cart;
 import com.software.jpetstore.domain.Category;
 import com.software.jpetstore.domain.Item;
 import com.software.jpetstore.domain.Product;
-import com.software.jpetstore.persistence.ProductMapper;
 import com.software.jpetstore.service.CatalogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,22 +13,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
 public class CatalogController {
-    private final CatalogService catalogService;
-
+    private Cart cart = new Cart();
     @Autowired
-    public CatalogController(CatalogService catalogService) {
-        this.catalogService = catalogService;
-    }
+    private CatalogService catalogService;
 
-    @GetMapping("/catalog")
-    public String view(){
-        return "catalog/main";
+    @GetMapping("/catalog/main")
+    public String view(HttpSession session, Model model) {
+        boolean authenticated = false;
+        session.setAttribute("authenticated", authenticated);
+        session.setAttribute("cart", cart);
+        return "/catalog/main";
     }
-
     @GetMapping("/catalog/category")
     public String viewCategory(@RequestParam("categoryId") String categoryid, Model model){
         Category category=catalogService.getCategory(categoryid);
@@ -55,11 +55,12 @@ public class CatalogController {
         model.addAttribute(product);
         return "/catalog/item";
     }
-   // @GetMapping("/catalog/SearchProducts")
+
+    // @GetMapping("/catalog/SearchProducts")
     @RequestMapping(value = "/catalog/SearchProducts",method = RequestMethod.POST)
     public String search(@RequestParam("keyword") String keyword,Model model){
         List<Product> productList=catalogService.searchProductList(keyword);
         model.addAttribute(productList);
-        return "/catalog/searchProducts";
+        return "/catalog/SearchProducts";
     }
 }
