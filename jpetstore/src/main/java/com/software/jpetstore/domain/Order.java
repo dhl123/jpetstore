@@ -28,6 +28,7 @@ public class Order implements Serializable {
     private String billState;
     private String billZip;
     private String billCountry;
+    private String status;
 
     public int getOrderId() {
         return orderId;
@@ -296,5 +297,9 @@ public class Order implements Serializable {
 
     public void setLineItems(List<LineItem> lineItems) {
         this.lineItems = lineItems;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

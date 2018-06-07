@@ -4,11 +4,13 @@ import com.software.jpetstore.domain.Account;
 import com.software.jpetstore.domain.Cart;
 import com.software.jpetstore.domain.Order;
 import com.software.jpetstore.service.OrderService;
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
@@ -17,8 +19,7 @@ import java.util.List;
 
 @Controller
 public class OrderController {
-    @Autowired
-    private OrderService orderService;
+    private final OrderService orderService;
     private static final List<String> CARD_TYPE_LIST;
     private Order order = new Order();
     private boolean shippingAddressRequired;
@@ -30,6 +31,11 @@ public class OrderController {
         cardList.add("MasterCard");
         cardList.add("American Express");
         CARD_TYPE_LIST = Collections.unmodifiableList(cardList);
+    }
+
+    @Autowired
+    public OrderController(OrderService orderService) {
+        this.orderService = orderService;
     }
 
     public int getOrderId() {

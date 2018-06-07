@@ -20,10 +20,15 @@ import java.util.List;
 
 @Controller
 public class AccountController {
+    private final AccountService accountService;
+    private final CatalogService catalogService;
+
     @Autowired
-    private AccountService accountService;
-    @Autowired
-    private CatalogService catalogService;
+    public AccountController(AccountService accountService, CatalogService catalogService) {
+        this.accountService = accountService;
+        this.catalogService = catalogService;
+    }
+
     @GetMapping("/account/SignonForm")
     public String view(){
         return "/account/SignonForm";
