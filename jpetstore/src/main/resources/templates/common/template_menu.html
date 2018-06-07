@@ -15,7 +15,7 @@
             <a th:if="${session.authenticated}==false" href="/account/SignonForm">Sign In</a>
             <a th:if="${session.authenticated}==true" href="/account/signoff">Sign Out</a>
             <span th:if="${session.authenticated}==true">
-                <img align="middle" src="/images/separator.gif"/> <a href="/account/edit">My Account</a>
+                <img align="middle" src="/images/separator.gif"/> <a href="/account/EditAccountForm">My Account</a>
             </span>
             <img align="middle" src="/images/separator.gif" /> <a href="/help.html">?</a>
         </div>

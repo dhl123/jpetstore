@@ -4,6 +4,7 @@ import com.software.jpetstore.domain.Account;
 import com.software.jpetstore.domain.Cart;
 import com.software.jpetstore.domain.Order;
 import com.software.jpetstore.service.OrderService;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -176,5 +177,14 @@ public class OrderController {
         } else {
             return "order/viewOrder";
         }
+    }
+
+
+    @GetMapping("/order/ListOrders")
+    public String viewlist(HttpSession session ,Model model){
+        Account account=(Account)session.getAttribute("account");
+        orderList = orderService.getOrdersByUsername(account.getUsername());
+        model.addAttribute("orderList",orderList);
+        return "/order/ListOrders";
     }
 }

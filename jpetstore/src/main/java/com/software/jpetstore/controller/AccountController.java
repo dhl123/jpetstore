@@ -1,9 +1,11 @@
 package com.software.jpetstore.controller;
 
 import com.software.jpetstore.domain.Account;
+import com.software.jpetstore.domain.Category;
 import com.software.jpetstore.domain.Product;
 import com.software.jpetstore.service.AccountService;
 import com.software.jpetstore.service.CatalogService;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -55,9 +57,41 @@ public class AccountController {
         session.setAttribute("authenticated", false);
         return "redirect:/catalog/main";
     }
-
-    @GetMapping("/account/edit")
-    public String editAccount() {
-        return "account/EditAccountForm";
+    @GetMapping("/account/EditAccountForm")
+    public String editform(){
+        return "/account/EditAccountForm";
     }
+    @RequestMapping(value = "/account/edit",method = RequestMethod.POST)
+    public String editAccount(@RequestParam("password") String password, @RequestParam("repeatedPassword") String repeatedPassword,
+                              @RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName,
+                              @RequestParam("email") String email, @RequestParam("phone") String phone,
+                              @RequestParam("address1") String address1, @RequestParam("address2") String address2,
+                              @RequestParam("city") String city, @RequestParam("state") String state,
+                              @RequestParam("zip") String zip, @RequestParam("country") String country, HttpSession session, Model model) {
+
+        if(!password.equals(repeatedPassword)){
+            session.setAttribute("errorMessage", "password not equal repeatepassword");
+            return "error";
+        }
+        Account account=(Account)session.getAttribute("account");
+        account.setPassword(password);
+        account.setFirstName(firstName);
+        account.setLanguagePreference(lastName);
+        account.setEmail(email);
+        account.setPhone(phone);
+        account.setAddress1(address1);
+        account.setAddress2(address2);
+        account.setCity(city);
+        account.setState(state);
+        account.setZip(zip);
+        account.setCountry(country);
+
+        accountService.updateAccount(account);
+        session.setAttribute("account",account);
+        List<Product> myList = catalogService.getProductListByCategory(account.getFavouriteCategoryId());
+        session.setAttribute("myList",myList);
+        return "/account/EditAccountForm";
+    }
+
+
 }

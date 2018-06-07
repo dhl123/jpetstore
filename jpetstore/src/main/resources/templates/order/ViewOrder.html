@@ -146,13 +146,8 @@
                                 <a th:href="'/catalog/item?itemId=' + ${lineItem.item.itemId}"
                                    th:text="${lineItem.item.itemId}"></a>
                             </td>
-                        <td th:if="${lineItem.item != null}">
-                                ${lineItem.item.attribute1}
-                                ${lineItem.item.attribute2}
-                                ${lineItem.item.attribute3}
-                                ${lineItem.item.attribute4}
-                                ${lineItem.item.attribute5}
-                                ${lineItem.item.product.name}
+                        <td th:if="${lineItem.item != null}" th:text="${lineItem.item.attribute1}+${lineItem.item.attribute2}+${lineItem.item.attribute3}+${lineItem.item.attribute4}+${lineItem.item.attribute5}+${lineItem.item.product.name}">
+
                             <i th:if="${lineItem.item == null}">
                                 {description unavailable}
                             </i>
