@@ -8,21 +8,24 @@
 <header th:replace="common/template_menu::header"></header>
 
 
-<%@ include file="../common/IncludeTop.jsp"%>
 
-<div id="Catalog"><form >
+
+<div id="Catalog">
+    <form th:action="@{/account/login}" th:object="${user}" th:method="post">
 
     <p>Please enter your username and password.</p>
-    <p>Username:<text name="username" value="j2ee" /> <br />
-        Password:<password name="password" value="j2ee" /></p>
-    <submit name="signon" value="Login" />
+    <p>Username:
+        <input name="username" value="j2ee" /> <br />
+        Password:
+        <input type="password" name="password" value="j2ee" /></p>
 
-</form> Need a user name and password? <link
-        beanclass="org.mybatis.jpetstore.web.actions.AccountActionBean"
-        event="newAccountForm">Register Now!</link></div>
+    <button type="submit" name="signon" value="Login">Login!</button>
 
-<%@ include file="../common/IncludeBottom.jsp"%>
+</form>
 
+    Need a user name and password? <a th:href="@{#}">Register Now!</a>
+
+</div>
 
 
 

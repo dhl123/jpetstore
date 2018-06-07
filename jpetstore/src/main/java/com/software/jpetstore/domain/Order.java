@@ -1,5 +1,10 @@
 package com.software.jpetstore.domain;
 
+import com.software.jpetstore.domain.Account;
+import com.software.jpetstore.domain.Cart;
+import com.software.jpetstore.domain.CartItem;
+import com.software.jpetstore.domain.LineItem;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
