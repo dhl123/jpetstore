@@ -9,7 +9,7 @@
 <header th:replace="common/template_menu::header"></header>
 
 
-<div id="Catalog"><form th:action="@{/order/new}" th:object="${order}"  th:method="post">
+<div id="Catalog"><form th:action="@{/order/ShippingForm}" th:object="${order}"  th:method="post">
     <table>
         <tr>
             <th colspan=2>Shipping Address</th>

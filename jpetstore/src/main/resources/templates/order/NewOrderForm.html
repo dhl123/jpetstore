@@ -9,25 +9,27 @@
 <header th:replace="common/template_menu::header"></header>
 
 <div id="Catalog">
-    <form th:action="@{/order/new}" th:object="${order}"  th:method="post">
+    <form th:action="@{/order/ShippingForm}" th:object="${order}" th:method="post">
         <table>
             <tr>
                 <th colspan=2>Payment Details</th>
             </tr>
             <tr>
                 <td>Card Type:</td>
-                <td><select th:field="*{cardType}" name="order.cardType">
-
-                </select></td>
+                <td>
+                    <select name="cardType" th:each="card_type : ${creditCardTypes}">
+                    <option value="" th:selected="${card_type}" th:text="${card_type}"></option>
+                </select>
+                </td>
             </tr>
             <tr>
                 <td>Card Number:</td>
-                <td><input type="text" th:field="*{creditCard}" name="order.creditCard" /> * Use a fake
+                <td><input type="text" name="creditCard" /> * Use a fake
                     number!</td>
             </tr>
             <tr>
                 <td>Expiry Date (MM/YYYY):</td>
-                <td><input type="text" th:field="*{expiryDate}" name="order.expiryDate" /></td>
+                <td><input type="text" name="expiryDate" /></td>
             </tr>
             <tr>
                 <th colspan=2>Billing Address</th>
@@ -35,39 +37,39 @@
 
             <tr>
                 <td>First name:</td>
-                <td><input type="text" th:field="*{billToFirstName}" name="order.billToFirstName" /></td>
+                <td><input type="text" name="billToFirstName" /></td>
             </tr>
             <tr>
                 <td>Last name:</td>
-                <td><input type="text" th:field="*{billToLastName}" name="order.billToLastName" /></td>
+                <td><input type="text" name="billToLastName" /></td>
             </tr>
             <tr>
                 <td>Address 1:</td>
-                <td><input type="text" th:field="*{billAddress1}" size="40" name="order.billAddress1" /></td>
+                <td><input type="text" size="40" name="billAddress1" /></td>
             </tr>
             <tr>
                 <td>Address 2:</td>
-                <td><input type="text" th:field="*{billAddress2}" size="40" name="order.billAddress2" /></td>
+                <td><input type="text" size="40" name="billAddress2" /></td>
             </tr>
             <tr>
                 <td>City:</td>
-                <td><input type="text" th:field="*{billCity}" name="order.billCity" /></td>
+                <td><input type="text" name="billCity" /></td>
             </tr>
             <tr>
                 <td>State:</td>
-                <td><input type="text" size="4" th:field="*{billState}" name="order.billState" /></td>
+                <td><input type="text" size="4" name="billState" /></td>
             </tr>
             <tr>
                 <td>Zip:</td>
-                <td><input type="text" size="10" th:field="*{billZip}" name="order.billZip" /></td>
+                <td><input type="text" size="10" name="billZip" /></td>
             </tr>
             <tr>
                 <td>Country:</td>
-                <td><input type="text" size="15" th:field="*{billCountry}" name="order.billCountry" /></td>
+                <td><input type="text" size="15" name="billCountry" /></td>
             </tr>
 
             <tr>
-                <td colspan=2><input type="checkbox" th:field="*{shippingAddressRequired}" name="shippingAddressRequired" />
+                <td colspan=2><input type="checkbox" name="shippingAddressRequired" />
                     Ship to different address...</td>
             </tr>
 
