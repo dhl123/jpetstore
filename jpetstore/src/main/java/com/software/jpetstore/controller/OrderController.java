@@ -85,7 +85,6 @@ public class OrderController {
         } else if (cart != null) {
             order.initOrder(account, cart);
             List<String> creditCardTypes=getCreditCardTypes();
-            System.out.println(creditCardTypes);
             model.addAttribute("creditCardTypes", creditCardTypes);
             return "order/NewOrderForm";
         } else {
@@ -97,10 +96,10 @@ public class OrderController {
 
     @RequestMapping(value = "/order/shippingForm", method = RequestMethod.POST)
     public String shippingForm(HttpSession session, Model model,
-                               @RequestParam("ShipAddress1") String ShipAddress1, @RequestParam("ShipAddress2") String ShipAddress2,
-                               @RequestParam("ShipCity") String ShipCity, @RequestParam("ShipToFirstName") String ShipToFirstName,
-                               @RequestParam("ShipToLastName") String ShipToLastName, @RequestParam("ShipCountry") String ShipCountry,
-                               @RequestParam("ShipState") String ShipState, @RequestParam("ShipZip") String ShipZip){
+                               @RequestParam("shipAddress1") String ShipAddress1, @RequestParam("shipAddress2") String ShipAddress2,
+                               @RequestParam("shipCity") String ShipCity, @RequestParam("shipToFirstName") String ShipToFirstName,
+                               @RequestParam("shipToLastName") String ShipToLastName, @RequestParam("shipCountry") String ShipCountry,
+                               @RequestParam("shipState") String ShipState, @RequestParam("shipZip") String ShipZip) {
 
         order.setShipAddress1(ShipAddress1);
         order.setShipAddress2(ShipAddress2);
@@ -111,6 +110,8 @@ public class OrderController {
         order.setShipState(ShipState);
         order.setShipZip(ShipZip);
         model.addAttribute("order", order);
+        List<String> creditCardTypes = getCreditCardTypes();
+        model.addAttribute("creditCardTypes", creditCardTypes);
         return "order/NewOrderForm";
     }
 
@@ -127,48 +128,53 @@ public class OrderController {
         }
     }
 
+    @RequestMapping(value = "/order/new", method = RequestMethod.GET)
+    public String newOrderConfirmed(HttpSession session, Model model,
+                                    @RequestParam(name = "confirmed") Boolean confirmed) {
+        setConfirmed(confirmed);
+
+        if (isConfirmed() && getOrder() != null) {
+            orderService.insertOrder(order);
+            Cart cart = ((Cart) session.getAttribute("cart"));
+            cart.getCartItemList().clear();
+            model.addAttribute("order", order);
+            return "order/ViewOrder";
+        } else {
+            session.setAttribute("errorMessage", "An error occurred processing your order (order was null).");
+            return "error";
+        }
+    }
+
     @RequestMapping(value = "/order/new", method = RequestMethod.POST)
     public String newOrder(HttpSession session, Model model,
-                           @RequestParam(name = "confirmed", defaultValue = "false") Boolean confirmed,
                            @RequestParam("cardType") String cardType, @RequestParam("creditCard") String creditCard,
                            @RequestParam("expiryDate") String  expiryDate, @RequestParam("billToFirstName") String  billToFirstName,
                            @RequestParam("billToLastName") String  billToLastName, @RequestParam("billAddress1") String  billAddress1,
                            @RequestParam("billAddress2") String  billAddress2, @RequestParam("billCity") String  billCity,
                            @RequestParam("billState") String  billState, @RequestParam("billZip") String  billZip,
                            @RequestParam("billCountry") String billCountry, @RequestParam(name = "shippingAddressRequired", defaultValue = "false") Boolean shippingAddressRequired_) {
-        setConfirmed(confirmed);
-
         shippingAddressRequired = shippingAddressRequired_;
+        order.setCardType(cardType);
+        order.setCreditCard(creditCard);
+        order.setExpiryDate(expiryDate);
+        order.setBillToFirstName(billToFirstName);
+        order.setBillToLastName(billToLastName);
+        order.setBillAddress1(billAddress1);
+        order.setBillAddress2(billAddress2);
+        order.setBillCity(billCity);
+        order.setStatus(billState);
+        order.setBillZip(billZip);
+        order.setBillCountry(billCountry);
+
+        model.addAttribute("order", order);
         if (shippingAddressRequired_) {
             shippingAddressRequired = false;
-            model.addAttribute("order", order);
             return "order/ShippingForm";
         }
         if (!isConfirmed()) {
-            model.addAttribute("order", order);
             return "order/confirmOrder";
-        } else if (getOrder() != null) {
-            order.setCardType(cardType);
-            order.setCreditCard(creditCard);
-            order.setExpiryDate(expiryDate);
-            order.setBillToFirstName(billToFirstName);
-            order.setBillToLastName(billToLastName);
-            order.setBillAddress1(billAddress1);
-            order.setBillAddress2(billAddress2);
-            order.setBillCity(billCity);
-            order.setStatus(billState);
-            order.setBillZip(billZip);
-            order.setBillCountry(billCountry);
-
-            orderService.insertOrder(order);
-            orderService.insertOrder(order);
-            Cart cart = ((Cart) session.getAttribute("cart"));
-            cart.getCartItemList().clear();
-
-            return "order/ViewOrder";
         } else {
-            session.setAttribute("errorMessage", "An error occurred processing your order (order was null).");
-            return "error";
+            return "order/viewOrder";
         }
     }
 }

@@ -9,7 +9,7 @@
 <header th:replace="common/template_menu::header"></header>
 
 
-<div id="BackLink"><a href="/catalog">Return to Main Menu</a></div>
+<div id="BackLink"><a href="/catalog/main">Return to Main Menu</a></div>
 
 <div id="Catalog">
 
@@ -158,8 +158,9 @@
                             </i>
                         </td>
 
-                            <td>${lineItem.quantity}</td>
-                        <td th:text="${#numbers.formatCurrency(lineItem.unitPrice)}"
+                        <td th:text="${lineItem.quantity}"
+                        </td>
+                        <td th:text="${#numbers.formatCurrency(lineItem.unitPrice)}">
                         </td>
                         <td th:text="${#numbers.formatCurrency(lineItem.total)}"></td>
                         </tr>

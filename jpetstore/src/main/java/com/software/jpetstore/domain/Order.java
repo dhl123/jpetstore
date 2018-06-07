@@ -1,10 +1,5 @@
 package com.software.jpetstore.domain;
 
-import com.software.jpetstore.domain.Account;
-import com.software.jpetstore.domain.Cart;
-import com.software.jpetstore.domain.CartItem;
-import com.software.jpetstore.domain.LineItem;
-
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -28,6 +23,11 @@ public class Order implements Serializable {
     private String billState;
     private String billZip;
     private String billCountry;
+
+    public String getStatus() {
+        return status;
+    }
+
     private String status;
 
     public int getOrderId() {
@@ -276,7 +276,7 @@ public class Order implements Serializable {
         cardType = "Visa";
         courier = "UPS";
         locale = "CA";
-        // status = "P";
+        status = "P";
 
         Iterator<CartItem> i = cart.getAllCartItems();
         while (i.hasNext()) {
