@@ -75,79 +75,100 @@ public class OrderController {
     }
 
 
-    @GetMapping("/order/NewOrderForm")
+    @GetMapping("/order/newOrderForm")
     public String newOrder(HttpSession session, Model model){
     Account account=((Account)session.getAttribute("account"));
     Cart cart=((Cart)session.getAttribute("cart"));
         if (account == null || !((boolean)session.getAttribute("authenticated"))) {
-            //setMessage("You must sign on before attempting to check out.  Please sign on and try checking out again.");
-            return "/help.html";
+            session.setAttribute("errorMessage", "You must sign on before attempting to check out.  Please sign on and try checking out again.");
+            return "error";
         } else if (cart != null) {
             order.initOrder(account, cart);
             List<String> creditCardTypes=getCreditCardTypes();
             System.out.println(creditCardTypes);
-            model.addAttribute(creditCardTypes);
-            return "/order/NewOrderForm";
+            model.addAttribute("creditCardTypes", creditCardTypes);
+            return "order/NewOrderForm";
         } else {
-            //setMessage("An order could not be created because a cart could not be found.");
-            return "/help.html";
+            session.setAttribute("errorMessage", "An order could not be created because a cart could not be found.");
+            return "error";
         }
     }
 
 
-    @RequestMapping(value = "/order/new",method = RequestMethod.POST)
-    public String New(HttpSession session,@RequestParam("ShipAddress1") String ShipAddress1,@RequestParam("ShipAddress2") String ShipAddress2,
-                      @RequestParam("ShipCity") String ShipCity,@RequestParam("ShipToFirstName") String ShipToFirstName,
-                      @RequestParam("ShipToLastName") String ShipToLastName, @RequestParam("ShipCountry") String ShipCountry,
-                      @RequestParam("ShipState") String ShipState,@RequestParam("ShipZip") String ShipZip){
+    @RequestMapping(value = "/order/shippingForm", method = RequestMethod.POST)
+    public String shippingForm(HttpSession session, Model model,
+                               @RequestParam("ShipAddress1") String ShipAddress1, @RequestParam("ShipAddress2") String ShipAddress2,
+                               @RequestParam("ShipCity") String ShipCity, @RequestParam("ShipToFirstName") String ShipToFirstName,
+                               @RequestParam("ShipToLastName") String ShipToLastName, @RequestParam("ShipCountry") String ShipCountry,
+                               @RequestParam("ShipState") String ShipState, @RequestParam("ShipZip") String ShipZip){
 
+        order.setShipAddress1(ShipAddress1);
+        order.setShipAddress2(ShipAddress2);
+        order.setShipCity(ShipCity);
+        order.setShipToFirstName(ShipToFirstName);
+        order.setShipToLastName(ShipToLastName);
+        order.setShipCountry(ShipCountry);
+        order.setShipState(ShipState);
+        order.setShipZip(ShipZip);
+        model.addAttribute("order", order);
+        return "order/NewOrderForm";
+    }
 
+    @GetMapping("/order/viewOrder")
+    public String viewOrder(@RequestParam("orderId") int orderId, HttpSession session, Model model) {
+        Order order = orderService.getOrder(orderId);
+        Account account = (Account) session.getAttribute("account");
+        if (account != null || account.getUsername().equals(order.getUsername())) {
+            model.addAttribute("order", order);
+            return "order/viewOrder";
+        } else {
+            session.setAttribute("errorMessage", "You may only view your own orders.");
+            return "error";
+        }
+    }
 
+    @RequestMapping(value = "/order/new", method = RequestMethod.POST)
+    public String newOrder(HttpSession session, Model model,
+                           @RequestParam(name = "confirmed", defaultValue = "false") Boolean confirmed,
+                           @RequestParam("cardType") String cardType, @RequestParam("creditCard") String creditCard,
+                           @RequestParam("expiryDate") String  expiryDate, @RequestParam("billToFirstName") String  billToFirstName,
+                           @RequestParam("billToLastName") String  billToLastName, @RequestParam("billAddress1") String  billAddress1,
+                           @RequestParam("billAddress2") String  billAddress2, @RequestParam("billCity") String  billCity,
+                           @RequestParam("billState") String  billState, @RequestParam("billZip") String  billZip,
+                           @RequestParam("billCountry") String billCountry, @RequestParam(name = "shippingAddressRequired", defaultValue = "false") Boolean shippingAddressRequired_) {
+        setConfirmed(confirmed);
+
+        shippingAddressRequired = shippingAddressRequired_;
+        if (shippingAddressRequired_) {
+            shippingAddressRequired = false;
+            model.addAttribute("order", order);
+            return "order/ShippingForm";
+        }
         if (!isConfirmed()) {
-            return "/order/ConfirmOrder";
+            model.addAttribute("order", order);
+            return "order/confirmOrder";
         } else if (getOrder() != null) {
-            order.setShipAddress1(ShipAddress1);
-            order.setShipAddress2(ShipAddress2);
-            order.setShipCity(ShipCity);
-            order.setShipToFirstName(ShipToFirstName);
-            order.setShipToLastName(ShipToLastName);
-            order.setShipCountry(ShipCountry);
-            order.setShipState(ShipState);
-            order.setShipZip(ShipZip);
+            order.setCardType(cardType);
+            order.setCreditCard(creditCard);
+            order.setExpiryDate(expiryDate);
+            order.setBillToFirstName(billToFirstName);
+            order.setBillToLastName(billToLastName);
+            order.setBillAddress1(billAddress1);
+            order.setBillAddress2(billAddress2);
+            order.setBillCity(billCity);
+            order.setStatus(billState);
+            order.setBillZip(billZip);
+            order.setBillCountry(billCountry);
 
             orderService.insertOrder(order);
-          //  Cart cart=((Cart)session.getAttribute("cart"));
+            orderService.insertOrder(order);
+            Cart cart = ((Cart) session.getAttribute("cart"));
+            cart.getCartItemList().clear();
 
-            //setMessage("Thank you, your order has been submitted.");
-
-            return "/order/ViewOrder";
+            return "order/ViewOrder";
         } else {
-            //setMessage("An error occurred processing your order (order was null).");
-            return "/help.html";
+            session.setAttribute("errorMessage", "An error occurred processing your order (order was null).");
+            return "error";
         }
-
-
-
-    }
-    @RequestMapping(value = "/order/ShippingForm",method = RequestMethod.POST)
-    public String shipping(@RequestParam("cardType") String cardType,@RequestParam("creditCard") String  creditCard,
-                           @RequestParam("expiryDate") String  expiryDate,@RequestParam("billToFirstName") String  billToFirstName,
-                           @RequestParam("billToLastName") String  billToLastName,@RequestParam("billAddress1") String  billAddress1,
-                           @RequestParam("billAddress2") String  billAddress2,@RequestParam("billCity") String  billCity,
-                           @RequestParam("billState") String  billState,@RequestParam("billZip") String  billZip,
-                           @RequestParam("billCountry") String  billCountry,@RequestParam("shippingAddressRequired") Boolean  shippingAddressRequired_){
-        order.setCardType(cardType);
-        order.setCreditCard(creditCard);
-        order.setExpiryDate(expiryDate);
-        order.setBillToFirstName(billToFirstName);
-        order.setBillToLastName(billToLastName);
-        order.setBillAddress1(billAddress1);
-        order.setBillAddress2(billAddress2);
-        order.setBillCity(billCity);
-        order.setStatus(billState);
-        order.setBillZip(billZip);
-        order.setBillCountry(billCountry);
-        shippingAddressRequired=shippingAddressRequired_;
-        return "/order/new";
     }
 }

@@ -12,8 +12,8 @@ public class MainController {
         return "help";
     }
 
-    @GetMapping("/error")
+    @GetMapping("/error1")
     public String error(HttpSession session) {
-        return "index";
+        return "error1";
     }
 }

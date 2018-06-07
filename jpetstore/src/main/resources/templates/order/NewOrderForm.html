@@ -9,7 +9,7 @@
 <header th:replace="common/template_menu::header"></header>
 
 <div id="Catalog">
-    <form th:action="@{/order/ShippingForm}" th:object="${order}" th:method="post">
+    <form th:action="@{/order/new}" th:object="${order}" th:method="post">
         <table>
             <tr>
                 <th colspan=2>Payment Details</th>
@@ -17,9 +17,9 @@
             <tr>
                 <td>Card Type:</td>
                 <td>
-                    <select name="cardType" th:each="card_type : ${creditCardTypes}">
-                    <option value="" th:selected="${card_type}" th:text="${card_type}"></option>
-                </select>
+                    <select name="cardType">
+                        <option value="" th:each="card_type : ${creditCardTypes}" th:text="${card_type}"></option>
+                    </select>
                 </td>
             </tr>
             <tr>
@@ -69,7 +69,7 @@
             </tr>
 
             <tr>
-                <td colspan=2><input type="checkbox" name="shippingAddressRequired" />
+                <td colspan=2><input type="checkbox" name="shippingAddressRequired" th:default="${false}"/>
                     Ship to different address...</td>
             </tr>
 

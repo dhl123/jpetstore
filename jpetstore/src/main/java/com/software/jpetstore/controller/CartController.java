@@ -74,4 +74,9 @@ public class CartController {
         }
         return "cart/cart";
     }
+
+    @GetMapping("/cart/checkout")
+    public String checkout() {
+        return "cart/checkout";
+    }
 }
