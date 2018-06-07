@@ -12,9 +12,11 @@
             <a href="/cart/viewCart"><img align="middle" name="img_cart"
                                           src="/images/cart.gif" /></a> <img align="middle"
                                                                              src="/images/separator.gif" />
-            <a th:if="${session.authenticated}== false" href="/account/SignonForm">Sign In</a>
-            <a th:if="${session.authenticated}== false" href="#">Sign Out</a>
-            <img align="middle" src="/images/separator.gif" /> <a href="#">My Account</a>
+            <a th:if="${session.authenticated}==false" href="/account/SignonForm">Sign In</a>
+            <a th:if="${session.authenticated}==true" href="/account/signoff">Sign Out</a>
+            <span th:if="${session.authenticated}==true">
+                <img align="middle" src="/images/separator.gif"/> <a href="/account/edit">My Account</a>
+            </span>
             <img align="middle" src="/images/separator.gif" /> <a href="/help.html">?</a>
         </div>
     </div>

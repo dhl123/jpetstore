@@ -156,9 +156,6 @@ body>#Menu {
     height: 9ex;
 }
 
-{
-}
-
 #Search {
     width: 33%;
     height: 9ex;
@@ -277,7 +274,7 @@ body>#Banner {
 
 #Catalog {
     padding: 1ex;
-    background:inherit;
+    background: white;
     text-align:center;
 }
 

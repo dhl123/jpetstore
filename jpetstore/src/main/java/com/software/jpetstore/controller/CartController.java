@@ -30,9 +30,9 @@ public class CartController {
         boolean isInStock = catalogService.isItemInStock(itemid);
         Item item = catalogService.getItem(itemid);
         ((Cart)session.getAttribute("cart")).addItem(item, isInStock);
-        model.addAttribute(item);
-        model.addAttribute(item.getProduct());
-        return "/catalog/item";
+        // model.addAttribute(item);
+        // model.addAttribute(item.getProduct());
+        return "redirect:/cart/cart";
     }
     @GetMapping("cart/viewCart")
     public String viewCart(HttpSession session,Model model){

@@ -15,20 +15,17 @@
             <th>Product ID</th>
             <th>Name</th>
         </tr>
-            <tr th:each="product : ${productList}">
-                <td>
-                    <a th:href="@{/catalog/product(productId=${product.productId})}" th:text="${product.description}"></a>
-                </td>
-                <td><b>
+        <tr th:each="product : ${productList}">
+            <td>
+                <a th:href="@{/catalog/product(productId=${product.productId})}" th:utext="${product.description}"></a>
+            </td>
+            <td>
+                <b>
                     <a th:href="@{/catalog/product(produtId=${product.productId})}" th:text="${product.productId}"><font color="BLACK">  </font></a>
-                </td>
-                <td th:text="${product.name}"></td>
-            </tr>
-
-        <tr>
-            <td></td>
+                </b>
+            </td>
+            <td th:text="${product.name}"></td>
         </tr>
-
     </table>
 
 </div>

@@ -1,0 +1,16 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head th:replace="common/template_head::head('MyPetstore Error')">
+
+</head>
+<body>
+
+<header th:replace="common/template_menu::header"></header>
+<div id="Content">
+    <p th:text="${session.errorMessage}"></p>
+</div>
+
+<footer th:replace="common/template_menu::footer"></footer>
+
+</body>
+</html>

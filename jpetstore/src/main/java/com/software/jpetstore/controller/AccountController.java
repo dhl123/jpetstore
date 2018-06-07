@@ -31,7 +31,7 @@ public class AccountController {
         return "/account/SignonForm";
     }
     @RequestMapping(value = "/account/login",method = RequestMethod.POST)
-    public String search(@RequestParam("username") String username,@RequestParam("password") String password, HttpSession session,Model model){
+    public String login(@RequestParam("username") String username, @RequestParam("password") String password, HttpSession session, Model model) {
         Account account=accountService.getAccount(username,password);
         if (account== null) {
             String value = "Invalid username or password.  Signon failed.";
@@ -44,7 +44,20 @@ public class AccountController {
             session.setAttribute("myList",myList);
             session.setAttribute("authenticated",authenticated);
             session.setAttribute("account",account);
-            return "redirect:/account/SignonForm";
+            return "catalog/main";
         }
+    }
+
+    @GetMapping("/account/signoff")
+    public String signoff(HttpSession session) {
+        session.setAttribute("account", null);
+        session.setAttribute("myL ist", null);
+        session.setAttribute("authenticated", false);
+        return "redirect:/catalog/main";
+    }
+
+    @GetMapping("/account/edit")
+    public String editAccount() {
+        return "account/EditAccountForm";
     }
 }
