@@ -39,6 +39,7 @@ public class AccountController {
         } else {
             List<Product> myList = catalogService.getProductListByCategory(account.getFavouriteCategoryId());
             boolean authenticated=true;
+            session.setAttribute("myList",myList);
             session.setAttribute("authenticated",authenticated);
             session.setAttribute("account",account);
             return "redirect:/account/SignonForm";

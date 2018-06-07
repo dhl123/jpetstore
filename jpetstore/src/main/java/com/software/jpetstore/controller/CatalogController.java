@@ -1,5 +1,6 @@
 package com.software.jpetstore.controller;
 
+import com.software.jpetstore.domain.Cart;
 import com.software.jpetstore.domain.Category;
 import com.software.jpetstore.domain.Item;
 import com.software.jpetstore.domain.Product;
@@ -18,12 +19,14 @@ import java.util.List;
 
 @Controller
 public class CatalogController {
+    private Cart cart=new Cart();
     @Autowired
     private CatalogService catalogService;
     @GetMapping("/catalog/main")
     public String view(HttpSession session,Model model){
         boolean authenticated=false;
         session.setAttribute("authenticated",authenticated);
+        session.setAttribute("cart",cart);
         return "/catalog/main";
     }
     @GetMapping("/catalog/category")

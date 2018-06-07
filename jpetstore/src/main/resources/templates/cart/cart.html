@@ -28,11 +28,11 @@
                     <th>&nbsp;</th>
                 </tr>
 
-                <tr th:if="${cart.numberOfItems} eq 0">
+                <tr th:if="${session.cart.numberOfItems} eq 0">
                     <td colspan="8"><b>Your cart is empty.</b></td>
                 </tr>
 
-                <tr th:each="cartItem: ${cart.cartItems}">
+                <tr th:each="cartItem: ${session.cart.cartItems}">
                     <td>
                         <a href="/catalog/item?itemId=${cartItem.item.itemId}">${cartItem.item.itemId}</a>
                     </td>
@@ -62,18 +62,18 @@
         </table>
 
 
-        <a th:if="${cart.numberOfItems} gt 0" href="/order/newOrderForm">Proceed to Checkout</a>
+        <a th:if="${session.cart.numberOfItems} gt 0" href="/order/newOrderForm">Proceed to Checkout</a>
     </div>
 
     <div id="MyList">
 
-        <p th:if="${session.account.myList} ne null">Pet Favorites <br /> Shop for more of your favorite pets here.</p>
+        <p th:if="${session.myList} ne null">Pet Favorites <br /> Shop for more of your favorite pets here.</p>
         <ul>
-            <li th:each="product : ${session.account.myList}">
+            <li th:each="product : ${session.myList}">
                 <a th:href="@{/catalog/product(productId=${product.productId})}" th:text="${product.name}">
 
                 </a>
-                (${product.productId})
+                <p th:text="${product.productId}"></p>
             </li>
         </ul>
 
