@@ -11,7 +11,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Collections;
+import java.util.Enumeration;
 import java.util.Iterator;
 
 @Controller
@@ -57,23 +60,19 @@ public class CartController {
         }
     }
     @GetMapping("/cart/updateCartQuantities")
-    public String update_cart(HttpSession session){
-        Iterator<CartItem> cartItems = ((Cart)session.getAttribute("cart")).getAllCartItems();
-        while (cartItems.hasNext()) {
-            CartItem cartItem = cartItems.next();
-            String itemId = cartItem.getItem().getItemId();
-            try {
-                int quantity = Integer.parseInt(itemId);
-                ((Cart)session.getAttribute("cart")).setQuantityByItemId(itemId, quantity);
+    public String update_cart(HttpServletRequest request, HttpSession session){
 
-                if (quantity < 1) {
-                    cartItems.remove();
-                }
-            } catch (Exception e) {
-                //ignore parse exceptions on purpose
+        Enumeration<String> params = request.getParameterNames();
+        Iterable<String> items = Collections.list(params);
+        for(String item : items) {
+            String itemId = request.getParameter(item);
+            int quantity = Integer.parseInt(itemId);
+            ((Cart)session.getAttribute("cart")).setQuantityByItemId(item, quantity);
+            if (quantity < 1) {
+                ((Cart)session.getAttribute("cart")).removeItemById(item);
             }
         }
-        return "cart/cart";
+        return "redirect:/cart/viewCart";
     }
 
     @GetMapping("/cart/checkout")
