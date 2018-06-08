@@ -35,8 +35,7 @@
                 </td>
                 <td th:text="${item.attribute1}+${item.attribute2}+${item.attribute3}+${item.attribute4}+${item.attribute5}+${product.name}">
                 </td>
-                <!--<td><fmt:formatNumber value="${item.listPrice}"
-                                      pattern="$#,##0.00" /></td>-->
+                <td th:text="${#numbers.formatCurrency(item.listPrice)}"></td>
                 <td>
                     <!--/*@thymesVar id="product" type="com.software.jpetstore.domain.Product"*/-->
                     <a th:href="@{/cart/addItemToCart(workingItemId=${item.itemId},productId=${item.product.productId})}">Add to Cart</a>

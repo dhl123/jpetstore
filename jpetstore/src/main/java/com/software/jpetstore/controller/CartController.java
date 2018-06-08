@@ -65,6 +65,7 @@ public class CartController {
             try {
                 int quantity = Integer.parseInt(itemId);
                 ((Cart)session.getAttribute("cart")).setQuantityByItemId(itemId, quantity);
+
                 if (quantity < 1) {
                     cartItems.remove();
                 }

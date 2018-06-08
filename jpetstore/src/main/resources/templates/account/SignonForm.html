@@ -16,6 +16,14 @@
     <p>Please enter your username and password.</p>
     <p>Username:
         <input name="username" value="j2ee" /> <br />
+
+
+       <!-- <input name="userId" type="text" class="text1" id="userId"
+               size="10" maxlength="10" onkeypress="userIdOnKeyPress()" value="<%=userId %>" onblur="validate(this)">
+        <span id="spanUserId"></span>-->
+
+
+
         Password:
         <input type="password" name="password" value="j2ee" /></p>
 
@@ -23,7 +31,7 @@
 
 </form>
 
-    Need a user name and password? <a th:href="@{#}">Register Now!</a>
+    Need a user name and password? <a th:href="@{/account/newAccountForm}">Register Now!</a>
 
 </div>
 

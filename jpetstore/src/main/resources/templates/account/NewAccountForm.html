@@ -1,7 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 
 <head th:replace="common/template_head::head('MyPetstore Catagory')">
+
+
+
 </head>
 <body>
 <header th:replace="common/template_menu::header"></header>
@@ -9,40 +12,32 @@
 <div id="Content">
 
     <div id="Catalog">
-        <form th:action="@{/account/edit}" th:method="post">
+        <form th:action="@{/account/newAccount}" th:method="post" th:object="${account}">
 
             <h3>User Information</h3>
 
             <table>
-                <tbody>
                 <tr>
-                    <td>User ID:</td>
-                    <td th:text="${account.username}"></td>
+                    <td th:text="#{edit.userid}"> </td>
+                    <td><input id="username" name="username"/></td>
+                </tr>
+
+                <tr>
+                    <td><label style="color:red" id="availableText"></label></td>
                 </tr>
                 <tr>
-                    <td>New password:</td>
-                    <td><input id="stripes--517137302" name="password"
-                               type="text">
-                        <script type="text/javascript">
-                            setTimeout(
-                                function () {
-                                    try {
-                                        var z = document
-                                            .getElementById('stripes--517137302');
-                                        z.focus();
-                                        z.select();
-                                    } catch (e) {
-                                    }
-                                }, 1);
-                        </script>
-                    </td>
+                    <td><button type="button" onclick="checkAvailable()">checkUserName</button></td>
                 </tr>
                 <tr>
-                    <td>Repeat password:</td>
-                    <td><input name="repeatedPassword" type="text"></td>
+                    <td th:text="#{edit.password}"></td>
+                    <td><input id="password" type="password" name="password"/></td>
                 </tr>
-                </tbody>
+                <tr>
+                    <td th:text="#{edit.repeatpassword}"> </td>
+                    <td><input id="repeatedPassword" type="password" name="repeatedPassword"/></td>
+                </tr>
             </table>
+
             <h3>Account Information</h3>
 
             <table>
@@ -81,7 +76,7 @@
                 </tr>
                 <tr>
                     <td>State:</td>
-                    <td><input name="state" value="CA" type="text"  size="4"></td>
+                    <td><input name="state" value="CA" type="text" size="4"></td>
                 </tr>
                 <tr>
                     <td>Zip:</td>
@@ -104,7 +99,7 @@
                     <td>Language Preference:</td>
                     <td><select name="languagePreference">
                         <option selected="selected" value="english">english</option>
-                        <option value="chinese">chinese</option>
+                        <option value="japanese">japanese</option>
                     </select></td>
                 </tr>
                 <tr>
@@ -131,18 +126,47 @@
                 </tbody>
             </table>
 
+            <p>
 
-            <input name="editAccount" value="Save Account Information"
+
+            <div>
+                <!-- <img alt="这是图片" src="/img/001.png"/> -->
+                <img alt="验证码" onclick = "this.src='/defaultKaptcha?d='+new Date()*1" src="/defaultKaptcha"/>
+            </div>
+
+                <input type="text" name="kaptcha" />
+
+
+            </p>
+            <input name="newAccount" value="Save Account Information"
                    type="submit">
 
         </form>
-        <a href="/order/ListOrders">My Orders</a>
-
     </div>
 
 </div>
 
 
 <footer th:replace="common/template_menu::footer"></footer>
+
+
+<script type="text/javascript">
+
+    function checkAvailable(){
+        username = document.getElementById("username").value;
+        fetch("/account/check_account?username="+username)
+            .then(f => f.text())
+    .then(r => {
+            var elem = document.getElementById("availableText");
+        if (r.toString() === 'true')
+            elem.innerText = "Username is acceptable.";
+        else
+            elem.innerText = "This username has been occupied.";
+    });
+    }
+
+</script>
+
+
 </body>
 </html>

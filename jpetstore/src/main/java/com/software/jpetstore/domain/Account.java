@@ -136,6 +136,34 @@ public class Account implements Serializable {
     private String favouriteCategoryId;
     private String languagePreference;
 
+    private boolean listOption;
+    private boolean bannerOption;
+    private String bannerName;
+
+    public boolean isListOption() {
+        return listOption;
+    }
+
+    public void setListOption(boolean listOption) {
+        this.listOption = listOption;
+    }
+
+    public boolean isBannerOption() {
+        return bannerOption;
+    }
+
+    public void setBannerOption(boolean bannerOption) {
+        this.bannerOption = bannerOption;
+    }
+
+    public String getBannerName() {
+        return bannerName;
+    }
+
+    public void setBannerName(String bannerName) {
+        this.bannerName = bannerName;
+    }
+
 
     public void setPassword(String password) {
         this.password = password;

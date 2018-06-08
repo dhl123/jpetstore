@@ -34,16 +34,13 @@
                             <td th:text="${cartItem.item.attribute1}+${cartItem.item.attribute2}+${cartItem.item.attribute3}+${cartItem.item.attribute4}+${cartItem.item.attribute5} ${cartItem.item.product.name}"></td>
                             <td th:text="${cartItem.inStock}"></td>
                             <td th:text="${cartItem.quantity}"></td>
-                          <!--  <td><fmt:formatNumber value="${cartItem.item.listPrice}"
-                                                  pattern="$#,##0.00" /></td>
-                            <td><fmt:formatNumber value="${cartItem.total}"
-                                                  pattern="$#,##0.00" /></td>
+                            <td th:text="${#numbers.formatCurrency(cartItem.item.listPrice)}">
+                            <td th:text="${#numbers.formatCurrency(cartItem.total)}">
                         </tr>
 
                     <tr>
-                        <td colspan="7">Sub Total: <fmt:formatNumber
-                                value="${actionBean.cart.subTotal}" pattern="$#,##0.00" /></td>
-                    </tr>   -->
+                        <td colspan="7" th:text="'Sub Total:'+${#numbers.formatCurrency(cart.subTotal)}">
+                    </tr>
                 </table>
 
             <td>&nbsp;</td>
