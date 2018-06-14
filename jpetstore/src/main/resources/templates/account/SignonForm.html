@@ -14,7 +14,7 @@
     <form th:action="@{/account/login}" th:object="${user}" th:method="post">
 
     <p>Please enter your username and password.</p>
-    <p>Username:
+        <p ><p th:text="#{edit.userid}">Username:</p>
         <input name="username" value="j2ee" /> <br />
 
 
@@ -24,7 +24,7 @@
 
 
 
-        Password:
+        <p th:text="#{edit.password}">Password:</p>
         <input type="password" name="password" value="j2ee" /></p>
 
     <button type="submit" name="signon" value="Login">Login!</button>

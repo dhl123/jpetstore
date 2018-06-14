@@ -30,11 +30,11 @@ public class MainController {
 
     @GetMapping("/help")
     public String help() {
-        return "help";
+        return "/help";
     }
 
     @GetMapping("/error1")
     public String error(HttpSession session) {
-        return "error1";
+        return "/error1";
     }
 }

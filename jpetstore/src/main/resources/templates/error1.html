@@ -1,16 +1,15 @@
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<head th:replace="common/template_head::head('MyPetstore Error')">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
 
 </head>
+
 <body>
 
-<header th:replace="common/template_menu::header"></header>
-<div id="Content">
-    Error:<p th:text="${session.errorMessage}"></p>
-</div>
-
-<footer th:replace="common/template_menu::footer"></footer>
-
+<h1 style="color:red;">ERROR!!</h1>
 </body>
+
 </html>

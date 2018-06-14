@@ -53,17 +53,17 @@ public class AccountController {
         String captchaSess = (String) session.getAttribute("verifyCode");
         if (!captchaSess.equals(kaptcha)) {
             session.setAttribute("errorMessage", "Wrong captcha.");
-            return "error";
+            return "/error1";
         }
 
         if (!password.equals(repeatedPassword)) {
             session.setAttribute("errorMessage", "password not equal repeatepassword");
-            return "error";
+            return "/error1";
         }
 
         if (accountService.getAccount(username) != null) {
             session.setAttribute("errorMessage", "Duplicate account existed.");
-            return "error";
+            return "/error1";
         }
 
         Account account = new Account();
@@ -164,7 +164,7 @@ public class AccountController {
 
         if(!password.equals(repeatedPassword)){
             session.setAttribute("errorMessage", "password not equal repeatepassword");
-            return "error";
+            return "/error1";
         }
         Account account=(Account)session.getAttribute("account");
         account.setPassword(password);

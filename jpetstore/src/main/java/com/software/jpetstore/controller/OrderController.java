@@ -82,15 +82,15 @@ public class OrderController {
     Cart cart=((Cart)session.getAttribute("cart"));
         if (account == null || !((boolean)session.getAttribute("authenticated"))) {
             session.setAttribute("errorMessage", "You must sign on before attempting to check out.  Please sign on and try checking out again.");
-            return "error";
+            return "/error1";
         } else if (cart != null) {
             order.initOrder(account, cart);
             List<String> creditCardTypes=getCreditCardTypes();
             model.addAttribute("creditCardTypes", creditCardTypes);
-            return "order/NewOrderForm";
+            return "/order/NewOrderForm";
         } else {
             session.setAttribute("errorMessage", "An order could not be created because a cart could not be found.");
-            return "error";
+            return "/error1";
         }
     }
 
@@ -113,7 +113,7 @@ public class OrderController {
         model.addAttribute("order", order);
         List<String> creditCardTypes = getCreditCardTypes();
         model.addAttribute("creditCardTypes", creditCardTypes);
-        return "order/NewOrderForm";
+        return "/order/NewOrderForm";
     }
 
     @GetMapping("/order/viewOrder")
@@ -125,7 +125,7 @@ public class OrderController {
             return "order/viewOrder";
         } else {
             session.setAttribute("errorMessage", "You may only view your own orders.");
-            return "error";
+            return "/error1";
         }
     }
 
@@ -142,7 +142,7 @@ public class OrderController {
             return "order/ViewOrder";
         } else {
             session.setAttribute("errorMessage", "An error occurred processing your order (order was null).");
-            return "error";
+            return "/error1";
         }
     }
 

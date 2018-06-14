@@ -16,7 +16,8 @@
 
         <h2>Shopping Cart</h2>
         <table>
-            <form th:method="get" th:action="@{/cart/updateCartQuantities}" th:object="${user}">
+            <form id="form1" onsubmit="return false" action="##" th:object="${user}">
+                <thead>
                 <tr>
                     <th><b>Item ID</b></th>
                     <th><b>Product ID</b></th>
@@ -28,36 +29,40 @@
                     <th>&nbsp;</th>
                 </tr>
 
-                <tr th:if="${session.cart.numberOfItems} eq 0">
-                    <td colspan="8"><b>Your cart is empty.</b></td>
-                </tr>
+                </thead>
+<tbody id="t_body">
 
-                <tr th:each="cartItem: ${session.cart.cartItems}">
-                    <td>
-                        <a th:href="'/catalog/item?itemId=' + ${cartItem.item.itemId}"
-                           th:text="${cartItem.item.itemId}"></a>
-                    </td>
-                    <td th:text="${cartItem.item.product.productId}"></td>
-                    <td th:text="${cartItem.item.attribute1}+${cartItem.item.attribute2}+${cartItem.item.attribute3}+${cartItem.item.attribute4}+${cartItem.item.attribute5}+${cartItem.item.product.name}">
+<tr th:if="${session.cart.numberOfItems} eq 0">
+    <td colspan="8"><b>Your cart is empty.</b></td>
+</tr>
 
-                    </td>
-                    <td th:text="${cartItem.inStock}"></td>
-                    <td><input type="text" size="3" th:name="${cartItem.item.itemId}" th:value="${cartItem.quantity}"/>
-                    </td>
-                    <td th:text="${#numbers.formatCurrency(cartItem.item.listPrice)}"></td>
-                    <td th:text="${#numbers.formatCurrency(cartItem.total)}"></td>
-                    <td>
-                        <a th:href="@{/cart/removeItemFromCart(cartItem=${cartItem.item.itemId})}">Remove</a>
-                    </td>
-                </tr>
+<tr th:each="cartItem: ${session.cart.cartItems}">
+    <td>
+        <a th:href="'/catalog/item?itemId=' + ${cartItem.item.itemId}"
+           th:text="${cartItem.item.itemId}"></a>
+    </td>
+    <td th:text="${cartItem.item.product.productId}"></td>
+    <td th:text="${cartItem.item.attribute1}+${cartItem.item.attribute2}+${cartItem.item.attribute3}+${cartItem.item.attribute4}+${cartItem.item.attribute5}+${cartItem.item.product.name}">
 
-                <tr>
-                    <td colspan="7" th:text="'Sub Total:' + ${#numbers.formatCurrency(session.cart.subTotal)}">Sub
-                        Total:
-                    </td>
-                    <button type="submit">Update Cart</button>
-                    <td>&nbsp;</td>
-                </tr>
+    </td>
+    <td th:text="${cartItem.inStock}"></td>
+    <td><input type="text" size="3" th:name="${cartItem.item.itemId}" th:value="${cartItem.quantity}"/>
+    </td>
+    <td th:text="${#numbers.formatCurrency(cartItem.item.listPrice)}"></td>
+    <td th:text="${#numbers.formatCurrency(cartItem.total)}"></td>
+    <td>
+        <a th:href="@{/cart/removeItemFromCart(cartItem=${cartItem.item.itemId})}">Remove</a>
+    </td>
+</tr>
+
+<tr>
+    <td colspan="7" th:text="'Sub Total:' + ${#numbers.formatCurrency(session.cart.subTotal)}">Sub
+        Total:
+    </td>
+    <button type="submit" onclick="update()" >Update Cart</button>
+    <td>&nbsp;</td>
+</tr>
+</tbody>
             </form>
         </table>
 
@@ -85,6 +90,62 @@
 
 
 <footer th:replace="common/template_menu::footer"></footer>
+
+
+<script src="/js/jquery-3.3.1.min.js"></script>
+
+<script>
+
+    function update() {
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            url: "/cart/update",
+            data: $('#form1').serialize(),
+
+            success: function (cartItems) {
+                $("#t_body").replaceWith("<tbody id=\"t_body\">")
+
+                for (i = 0; i < cartItems.length; i++) {
+                    result = "<tr><td><a th:href=\"/catalog/item?itemId=" + cartItems[i].item.itemId + "\">" + cartItems[i].item.itemId + "</a></td><td>" + cartItems[i].item.product.productId;
+                    result += "</td><td>"
+                    if(cartItems[i].item.attribute1!=null){
+                        result+=cartItems[i].item.attribute1;
+                    }
+                    if(cartItems[i].item.attribute2!=null){
+                        result+=cartItems[i].item.attribute2;
+                    }
+                    if(cartItems[i].item.attribute3!=null){
+                        result+=cartItems[i].item.attribute3;
+                    }
+                    if(cartItems[i].item.attribute4!=null){
+                        result+=cartItems[i].item.attribute4;
+                    }
+                    if(cartItems[i].item.attribute5!=null){
+                        result+=cartItems[i].item.attribute5;
+                    }
+
+                    result+=cartItems[i].item.product.name;
+                    result += "</td> <td>" + cartItems[i].inStock + "</td> <td><input type=\"text\" size=\"3\" th:name=\"" + cartItems[i].item.itemId + "\" value=\"" + cartItems[i].quantity + "\"/>";
+                    result += "</td><td>" + cartItems[i].item.listPrice + "</td><td>" + cartItems[i].total + "</td>" + "<td><a th:href=\"@{/cart/removeItemFromCart(cartItem=" + cartItems[i].item.itemId + ")\">Remove</a>";
+                   // result+="</td></tr>"+"<tr><td colspan=\"7\">"+"Sub Total:" + $.session.get('cart').subTotal+"<td colspan=\"7\">"+"Sub Total:" + $.session.get('cart').subTotal;
+                    console.log(result)
+                    $("#t_body").append(result);
+                    $("#t_body").append("</tbody>");
+                }
+
+            },
+            error: function () {
+                alert("异常！");
+            }
+
+        });
+    }
+</script>
+
+
+
+
 </body>
 
 </html>
