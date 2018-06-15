@@ -18,7 +18,7 @@ import java.util.List;
 
 @Controller
 public class CatalogController {
-   /*@Autowired
+  /* @Autowired
     private CatalogService catalogService;
 
     @GetMapping("/catalog/category/{categoryId}")
@@ -43,7 +43,6 @@ public class CatalogController {
         return catalogService.getItem(itemId);
     }
 */
-
 
     private Cart cart = new Cart();
     @Autowired
