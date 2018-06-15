@@ -18,7 +18,7 @@ import java.util.List;
 
 @Controller
 public class CatalogController {
-  /* @Autowired
+   /*@Autowired
     private CatalogService catalogService;
 
     @GetMapping("/catalog/category/{categoryId}")
@@ -44,6 +44,7 @@ public class CatalogController {
     }
 */
 
+
     private Cart cart = new Cart();
     @Autowired
     private CatalogService catalogService;
@@ -60,6 +61,7 @@ public class CatalogController {
         Category category=catalogService.getCategory(categoryid);
         List<Product> productList=catalogService.getProductListByCategory(categoryid);
         model.addAttribute(category);
+        System.out.println(category);
         model.addAttribute(productList);
         return "/catalog/category";
     }
@@ -128,5 +130,6 @@ public class CatalogController {
         model.addAttribute(productList);
         return "/catalog/SearchProducts";
     }
+
 
 }

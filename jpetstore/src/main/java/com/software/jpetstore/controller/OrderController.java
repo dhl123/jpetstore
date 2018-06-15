@@ -113,7 +113,7 @@ public class OrderController {
         model.addAttribute("order", order);
         List<String> creditCardTypes = getCreditCardTypes();
         model.addAttribute("creditCardTypes", creditCardTypes);
-        return "/order/NewOrderForm";
+        return "order/ConfirmOrder";
     }
 
     @GetMapping("/order/viewOrder")

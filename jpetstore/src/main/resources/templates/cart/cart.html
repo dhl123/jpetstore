@@ -127,7 +127,7 @@
 
                     result+=cartItems[i].item.product.name;
                     result += "</td> <td>" + cartItems[i].inStock + "</td> <td><input type=\"text\" size=\"3\" th:name=\"" + cartItems[i].item.itemId + "\" value=\"" + cartItems[i].quantity + "\"/>";
-                    result += "</td><td>" + cartItems[i].item.listPrice + "</td><td>" + cartItems[i].total + "</td>" + "<td><a th:href=\"@{/cart/removeItemFromCart(cartItem=" + cartItems[i].item.itemId + ")\">Remove</a>";
+                    result += "</td><td>" + cartItems[i].item.listPrice + "</td><td>" + cartItems[i].total + "</td>" + "<td><a href=\"/cart/removeItemFromCart?cartItem="+cartItems[i].item.itemId+"\">Remove</a>"// + cartItems[i].item.itemId + ")}\">Remove</a>";
                    // result+="</td></tr>"+"<tr><td colspan=\"7\">"+"Sub Total:" + $.session.get('cart').subTotal+"<td colspan=\"7\">"+"Sub Total:" + $.session.get('cart').subTotal;
                     console.log(result)
                     $("#t_body").append(result);
